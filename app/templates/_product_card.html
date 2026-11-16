@@ -1,0 +1,21 @@
+{% from "_icons.html" import icon %}
+{% macro product_card(p) -%}
+<article class="product-card reveal" data-category="{{ p.category }}" id="{{ p.slug }}">
+  <div class="product-media cat-{{ p.category }}">
+    <img src="{{ url_for('static', filename='img/products/' ~ p.image) }}" alt="{{ p.name }}, {{ p.flavour }}, {{ p.weight }} pack" loading="lazy" width="400" height="500">
+    <span class="product-weight">{{ p.weight }}</span>
+  </div>
+  <div class="product-body">
+    <p class="product-flavour">{{ p.flavour }}</p>
+    <h3 class="product-name">{{ p.name }}</h3>
+    <p class="product-desc">{{ p.description }}</p>
+    <ul class="product-tags">
+      <li>{{ icon('leaf') }} 100% Natural</li>
+      <li>{{ icon('badge') }} Freshly made</li>
+    </ul>
+    <a class="btn btn-order" href="{{ order_link(p) }}" target="_blank" rel="noopener" aria-label="Order {{ p.name }}, {{ p.flavour }}, on WhatsApp">
+      {{ icon('whatsapp') }} Order on WhatsApp
+    </a>
+  </div>
+</article>
+{%- endmacro %}

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% from "_product_card.html" import product_card %}
+{% block content %}
+
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span>
+  </div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow eyebrow-light">{{ icon('leaf') }} Freshly made in Ghana</p>
+      <h1>Crispy, crunchy <span class="hl">Ghana snacks</span> made with passion.</h1>
+      <p class="hero-lead">Plantain chips, sweet potato chips, popcorn and coated peanuts, made from locally sourced ingredients. {{ company.tagline }}.</p>
+      <div class="hero-actions">
+        <a class="btn btn-sun btn-lg" href="{{ url_for('main.products') }}">
+          View our snacks {{ icon('arrow') }}
+        </a>
+        <a class="btn btn-ghost-light btn-lg" href="{{ whatsapp_link('Hello Harvests Gateway, I would like to place an order.') }}" target="_blank" rel="noopener">
+          {{ icon('whatsapp') }} Order on WhatsApp
+        </a>
+      </div>
+      <ul class="hero-points">
+        <li>{{ icon('leaf') }} 100% natural</li>
+        <li>{{ icon('shield') }} Strict hygiene</li>
+        <li>{{ icon('bag') }} 150g packs</li>
+      </ul>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-disc" aria-hidden="true"></div>
+      <div class="hero-slider" id="heroSlider" role="region" aria-roledescription="carousel" aria-label="Harvests snacks">
+        <figure class="hero-slide is-active">
+          <img src="{{ url_for('static', filename='img/hero-packs.webp') }}" alt="Harvests snack packs: coated peanuts, popcorn, ripe plantain, sweet potato and plantain snacks" width="1100" height="767" fetchpriority="high">
+        </figure>
+        {% for p in hero_slides %}
+        {% set img = url_for('static', filename='img/products/' ~ p.image) %}
+        <figure class="hero-slide hero-slide-product" style="--bg: url('{{ img }}')">
+          <img src="{{ img }}" alt="{{ p.name }}, {{ p.flavour }}, {{ p.weight }} pack" width="400" height="560" decoding="async">
+          <figcaption>
+            <a href="{{ url_for('main.products') }}#{{ p.category }}"><span>{{ p.flavour }}</span>{{ p.name }}</a>
+          </figcaption>
+        </figure>
+        {% endfor %}
+        <div class="hero-dots" role="tablist" aria-label="Choose slide">
+          <button class="is-active" role="tab" aria-label="Slide 1" aria-selected="true"></button>
+          {% for p in hero_slides %}<button role="tab" aria-label="Slide {{ loop.index + 1 }}" aria-selected="false"></button>{% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    {% for _ in range(2) %}
+    <span>Ripe Plantain</span><i></i><span>Green Plantain</span><i></i><span>Sweet Potato</span><i></i><span>White Cheddar Popcorn</span><i></i><span>Creamy Milkway Popcorn</span><i></i><span>Milky Chocolate Popcorn</span><i></i><span>Spicy Coated Peanuts</span><i></i>
+    {% endfor %}
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Our snacks</p>
+      <h2>Customer favourites</h2>
+      <!-- <p>Tap <strong>Order on WhatsApp</strong> under any snack and your order message is ready to send.</p> -->
+    </div>
+    <div class="product-grid product-grid-two">
+      {% for p in featured[:2] %}{{ product_card(p) }}{% endfor %}
+    </div>
+    <div class="center-cta">
+      <a class="btn btn-primary btn-xl" href="{{ url_for('main.products') }}">
+        See all snacks {{ icon('arrow') }}
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-cream">
+  <div class="container split">
+    <div class="split-copy reveal">
+      <p class="eyebrow">Welcome to {{ company.name }}</p>
+      <h2>{{ company.slogan }}</h2>
+      <p class="lead">{{ welcome }}</p>
+      <p>{{ mission }}</p>
+      <a class="btn btn-outline" href="{{ url_for('main.about') }}">Our story, vision and mission {{ icon('arrow') }}</a>
+    </div>
+    <ol class="promise-list">
+      {% for p in pillars %}
+      <li class="promise reveal">
+        <span class="promise-num">{{ "%02d"|format(loop.index) }}</span>
+        <div>
+          <h3>{{ p.title }}</h3>
+          <p>{{ p.text }}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container safety-teaser reveal">
+    <img src="{{ url_for('static', filename='img/handwashing.webp') }}" alt="Hands being washed under a tap" loading="lazy" width="720" height="470">
+    <div class="safety-teaser-copy">
+      <p class="eyebrow">Food safety &amp; hygiene</p>
+      <h2>Our responsibility, every day.</h2>
+      <p>Clean hands, clean spaces, clean products. We check, we test, and we make sure every pack meets our standard before it reaches you.</p>
+      <p class="trio">Clean processes <i></i> Quality snacks <i></i> Happy customers</p>
+      <a class="btn btn-outline" href="{{ url_for('main.quality') }}">How we keep it safe {{ icon('arrow') }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container cta-inner reveal">
+    <div>
+      <h2>Craving something crunchy?</h2>
+      <p>Order for yourself, your office, your shop or your next event. We reply quickly on WhatsApp.</p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn btn-sun btn-lg" href="{{ url_for('main.products') }}">Browse snacks {{ icon('arrow') }}</a>
+      <a class="btn btn-ghost-light btn-lg" href="{{ whatsapp_link('Hello Harvests Gateway, I would like to place an order.') }}" target="_blank" rel="noopener">{{ icon('whatsapp') }} WhatsApp us</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

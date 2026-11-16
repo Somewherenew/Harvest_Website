@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% from "_product_card.html" import product_card %}
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow eyebrow-light">{{ icon('leaf') }} Freshly made, 100% natural</p>
+    <h1>Our Snacks</h1>
+    <p>Every pack is 150g of crunchy goodness made from locally sourced ingredients. Pick a snack and order it straight away on WhatsApp.</p>
+  </div>
+</section>
+
+<section class="section section-tight">
+  <div class="container">
+    <div class="filters" role="toolbar" aria-label="Filter snacks">
+      <button class="chip is-active" data-filter="all" aria-pressed="true">All snacks <span>{{ products|length }}</span></button>
+      {% for c in categories %}
+      {% set n = products|selectattr('category','equalto',c.slug)|list|length %}
+      <button class="chip" data-filter="{{ c.slug }}" aria-pressed="false">{{ c.name }} <span>{{ n }}</span></button>
+      {% endfor %}
+    </div>
+
+    <div class="product-grid product-grid-full" id="productGrid">
+      {% for p in products %}{{ product_card(p) }}{% endfor %}
+    </div>
+
+    <div class="bulk-note reveal">
+      <span class="pillar-icon">{{ icon('bag') }}</span>
+      <div>
+        <h3>Buying in bulk for a shop, office or event?</h3>
+        <p>Send us your list on WhatsApp and we will get back to you with availability and delivery details.</p>
+      </div>
+      <a class="btn btn-primary" href="{{ whatsapp_link('Hello Harvests Gateway, I would like to make a bulk order.') }}" target="_blank" rel="noopener">{{ icon('whatsapp') }} Bulk order</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

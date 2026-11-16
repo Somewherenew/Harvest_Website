@@ -1,0 +1,96 @@
+{% from "_icons.html" import icon %}
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} | {{ company.name }}</title>
+  <meta name="description" content="{{ company.name }} makes freshly made Ghanaian snacks: plantain chips, sweet potato chips, popcorn and coated peanuts. {{ company.tagline }}.">
+  <meta name="theme-color" content="#137a2a">
+  <meta property="og:title" content="{{ company.name }} | {{ company.tagline }}">
+  <meta property="og:description" content="Freshly made plantain chips, sweet potato chips, popcorn and coated peanuts from Ghana.">
+  <meta property="og:image" content="{{ url_for('static', filename='img/og-banner.jpg', _external=True) }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body class="page-{{ (request.endpoint or 'notfound').split('.')[-1] }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container nav-wrap">
+      <a class="brand" href="{{ url_for('main.home') }}" aria-label="{{ company.name }} home">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Harvests, freshly made" width="160" height="47">
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Main">
+        {% set links = [('main.home','Home'),('main.products','Our Snacks'),('main.about','About Us'),('main.quality','Food Safety'),('main.contact','Contact')] %}
+        <ul>
+          {% for ep, label in links %}
+          <li><a href="{{ url_for(ep) }}" class="{{ 'active' if request.endpoint == ep }}">{{ label }}</a></li>
+          {% endfor %}
+        </ul>
+        <a class="btn btn-wa nav-cta" href="{{ whatsapp_link('Hello Harvests Gateway, I would like to make an enquiry.') }}" target="_blank" rel="noopener">
+          {{ icon('whatsapp') }} Chat with us
+        </a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
+        <span class="when-closed">{{ icon('menu') }}</span><span class="when-open">{{ icon('close') }}</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-wave" aria-hidden="true"></div>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Harvests" width="170" height="50" loading="lazy">
+        <p class="footer-name">{{ company.name }}<br><span>{{ company.descriptor }}</span></p>
+        <p class="footer-tag">{{ company.tagline }}.</p>
+      </div>
+      <div>
+        <h3>Explore</h3>
+        <ul class="footer-links">
+          <li><a href="{{ url_for('main.products') }}">Our Snacks</a></li>
+          <li><a href="{{ url_for('main.about') }}">About Us</a></li>
+          <li><a href="{{ url_for('main.quality') }}">Food Safety</a></li>
+          <li><a href="{{ url_for('main.contact') }}">Contact &amp; Order</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Our Snacks</h3>
+        <ul class="footer-links">
+          {% for c in categories %}
+          <li><a href="{{ url_for('main.products') }}#{{ c.slug }}">{{ c.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h3>Get in touch</h3>
+        <ul class="footer-contact">
+          <li>{{ icon('whatsapp') }} <a href="{{ whatsapp_link() }}" target="_blank" rel="noopener">{{ company.whatsapp_display }}</a></li>
+          <li>{{ icon('phone') }} <a href="tel:{{ company.phone_link }}">{{ company.phone }}</a></li>
+          <li>{{ icon('mail') }} <a href="mailto:{{ company.email }}">{{ company.email }}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; {{ year }} {{ company.name }} All rights reserved.</p>
+      <p>{{ company.safety_tagline }}.</p>
+    </div>
+  </footer>
+
+  <a class="wa-float" href="{{ whatsapp_link('Hello Harvests Gateway, I would like to place an order.') }}" target="_blank" rel="noopener" aria-label="Order on WhatsApp">
+    {{ icon('whatsapp') }}
+  </a>
+
+  <script src="{{ asset('js/main.js') }}" defer></script>
+</body>
+</html>

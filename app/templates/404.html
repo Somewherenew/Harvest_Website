@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block content %}
+<section class="section notfound">
+  <div class="container">
+    <p class="eyebrow">Error 404</p>
+    <h1>This page has been snacked on.</h1>
+    <p>We could not find the page you were looking for.</p>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('main.products') }}">View our snacks {{ icon('arrow') }}</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow eyebrow-light">{{ icon('whatsapp') }} We reply on WhatsApp</p>
+    <h1>Contact &amp; Order</h1>
+    <p>Questions, orders or partnerships. Reach us any way that suits you.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-grid">
+    <div class="contact-cards">
+      <a class="contact-card reveal" href="{{ whatsapp_link('Hello Harvests Gateway, I would like to make an enquiry.') }}" target="_blank" rel="noopener">
+        <span class="contact-icon wa">{{ icon('whatsapp') }}</span>
+        <div><h3>WhatsApp</h3><p>{{ company.whatsapp_display }}</p><small>Fastest way to order</small></div>
+      </a>
+      <a class="contact-card reveal" href="tel:{{ company.phone_link }}">
+        <span class="contact-icon">{{ icon('phone') }}</span>
+        <div><h3>Call us</h3><p>{{ company.phone }}</p></div>
+      </a>
+      <a class="contact-card reveal" href="mailto:{{ company.email }}">
+        <span class="contact-icon">{{ icon('mail') }}</span>
+        <div><h3>Email</h3><p>{{ company.email }}</p></div>
+      </a>
+    </div>
+
+    <form class="order-form reveal" id="orderForm" data-wa="{{ company.whatsapp }}" novalidate>
+      <h2>Quick order form</h2>
+      <p class="form-note">Fill this in and we will open WhatsApp with your order ready to send. Nothing is stored on this website.</p>
+      <div class="field">
+        <label for="f-name">Your name</label>
+        <input id="f-name" name="name" type="text" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="f-product">Snack</label>
+        <select id="f-product" name="product" required>
+          <option value="">Choose a snack</option>
+          {% for p in products %}<option value="{{ label(p) }}">{{ label(p) }}</option>{% endfor %}
+          <option value="A mix of different snacks">A mix of different snacks</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="f-qty">Number of packs</label>
+          <input id="f-qty" name="qty" type="number" min="1" value="1" inputmode="numeric" required>
+        </div>
+        <div class="field">
+          <label for="f-loc">Delivery location</label>
+          <input id="f-loc" name="location" type="text" autocomplete="address-level2" placeholder="e.g. East Legon, Accra">
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-note">Anything else? <span>(optional)</span></label>
+        <textarea id="f-note" name="note" rows="3"></textarea>
+      </div>
+      <p class="form-error" id="formError" role="alert" hidden>Please add your name and choose a snack.</p>
+      <button class="btn btn-order btn-lg" type="submit">{{ icon('whatsapp') }} Send order on WhatsApp</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

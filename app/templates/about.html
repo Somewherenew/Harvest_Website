@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow eyebrow-light">{{ icon('leaf') }} {{ company.descriptor }}</p>
+    <h1>About Us</h1>
+    <p>{{ welcome }}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <div class="split-copy reveal">
+      <p class="eyebrow">Who we are</p>
+      <h2>{{ company.slogan }}</h2>
+      {% for para in intro %}<p>{{ para }}</p>{% endfor %}
+    </div>
+    <div class="about-logo reveal">
+      <img src="{{ url_for('static', filename='img/logo-full.png') }}" alt="Harvests Gateway Ltd. logo" loading="lazy" width="600" height="228">
+      <p class="about-tagline">{{ company.tagline }}.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-cream">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">What drives us</p>
+      <h2>Vision, mission and purpose</h2>
+    </div>
+    <div class="vmp">
+      <article class="vmp-card vmp-vision reveal">
+        <span class="vmp-icon">{{ icon('eye') }}</span>
+        <h3>Our Vision</h3>
+        <p>{{ vision }}</p>
+      </article>
+      <article class="vmp-card vmp-mission reveal">
+        <span class="vmp-icon">{{ icon('target') }}</span>
+        <h3>Our Mission</h3>
+        <p>{{ mission }}</p>
+      </article>
+      <article class="vmp-card vmp-purpose reveal">
+        <span class="vmp-icon">{{ icon('gear') }}</span>
+        <h3>Our Purpose</h3>
+        <p>{{ purpose }}</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Our values</p>
+      <h2>What we stand for</h2>
+    </div>
+    <div class="values-grid">
+      {% for p in pillars %}
+      <div class="value-card reveal">
+        <span class="pillar-icon">{{ icon(p.icon) }}</span>
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.text }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-green">
+  <div class="container culture">
+    <div class="culture-photo reveal">
+      <img src="{{ url_for('static', filename='img/team-hands.jpg') }}" alt="Many hands joined together in the shape of a heart" loading="lazy" width="495" height="467">
+    </div>
+    <div class="culture-copy">
+      <p class="eyebrow eyebrow-light">Our culture</p>
+      <h2>Every hand matters. <span class="hl">Every role counts.</span></h2>
+      <p>From the very first ingredient to the final package, excellence is a team effort.</p>
+      <div class="culture-grid">
+        {% for c in culture %}
+        <div class="culture-item reveal">
+          <span>{{ icon(c.icon) }}</span>
+          <div><h3>{{ c.title }}</h3><p>{{ c.text }}</p></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Our team</p>
+      <h2>Organisational structure</h2>
+    </div>
+    <div class="org reveal" role="list">
+      <div class="org-node org-top" role="listitem">{{ org.top }}</div>
+      <div class="org-line"></div>
+      <div class="org-node org-top" role="listitem">{{ org.second }}</div>
+      <div class="org-line"></div>
+      <div class="org-units">
+        {% for u in org.units %}<div class="org-node org-unit" role="listitem">{{ u }}</div>{% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

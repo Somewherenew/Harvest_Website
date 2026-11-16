@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow eyebrow-light">{{ icon('shield') }} Food safety &amp; hygiene</p>
+    <h1>Our Responsibility Every Day</h1>
+    <p>{{ company.safety_tagline }}.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container safety-teaser reveal">
+    <img src="{{ url_for('static', filename='img/handwashing.webp') }}" alt="Hands being washed under a tap" loading="lazy" width="720" height="470">
+    <div class="safety-teaser-copy">
+      <p class="eyebrow">Safe snacks, every pack</p>
+      <h2>Clean processes. Quality snacks. Happy customers.</h2>
+      <p>Food you eat should be food you can trust. That is why safety and hygiene sit at the centre of how we work, from the farm produce we receive to the sealed 150g pack in your hands.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-cream">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Our five commitments</p>
+      <h2>How we keep it safe</h2>
+    </div>
+    <div class="safety-grid">
+      {% for s in safety %}
+      <div class="safety-card reveal">
+        <span class="safety-icon">{{ icon(s.icon) }}</span>
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.text }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container cta-inner reveal">
+    <div>
+      <h2>Quality snacks, better lives.</h2>
+      <p>Taste the difference that care makes.</p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn btn-sun btn-lg" href="{{ url_for('main.products') }}">View our snacks {{ icon('arrow') }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
