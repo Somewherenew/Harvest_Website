@@ -483,3 +483,45 @@ p { margin: 0 0 1em; }
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .js .reveal { opacity: 1; transform: none; }
 }
+
+
+
+/* =========================================================
+   Welcome page (visitor details form)
+   ========================================================= */
+.welcome { min-height: 100vh; min-height: 100dvh; display: grid; grid-template-columns: 1fr 1fr; }
+.welcome-brand {
+  position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; gap: 2rem;
+  padding: clamp(2rem, 5vw, 3.5rem); color: rgba(255,255,255,.9);
+  background: radial-gradient(120% 90% at 85% 30%, #1f9a3a 0%, var(--green) 35%, var(--green-700) 70%, var(--green-900) 100%);
+}
+.welcome-brand::after {
+  content: ""; position: absolute; width: 320px; height: 320px; border-radius: 50%;
+  background: var(--sun); opacity: .16; left: -120px; bottom: -140px;
+}
+.welcome-logo { width: 190px; height: auto; background: #fff; padding: .7rem 1rem; border-radius: 16px; position: relative; z-index: 1; }
+.welcome-brand-copy { position: relative; z-index: 1; }
+.welcome-brand h1 { color: #fff; font-size: clamp(2rem, 3.6vw, 3rem); margin-bottom: .4em; }
+.welcome-brand-copy p:last-child { font-size: 1.15rem; font-style: italic; margin: 0; }
+.welcome-packs {
+  position: relative; z-index: 1; width: min(520px, 100%); align-self: center;
+  background: #fff; border-radius: 26px; padding: 3%; box-shadow: 0 26px 50px rgba(0,0,0,.3);
+}
+.welcome-form-wrap { display: grid; place-items: center; padding: clamp(2rem, 5vw, 3.5rem) 1.25rem; background: var(--cream); }
+.welcome-form { width: min(460px, 100%); }
+.welcome-form h2 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
+.welcome-intro { color: var(--muted); margin-bottom: 1.6rem; }
+.field-error { color: var(--red); font-size: .88rem; font-weight: 600; margin: .1rem 0 0; }
+.field.has-error input { border-color: var(--red); }
+.welcome-next { width: 100%; margin-top: .6rem; }
+.welcome-note { display: flex; gap: .5rem; align-items: flex-start; font-size: .85rem; color: var(--muted); margin: 1rem 0 0; }
+.welcome-note .icon { color: var(--green); margin-top: .1rem; }
+
+@media (max-width: 860px) {
+  .welcome { grid-template-columns: 1fr; }
+  .welcome-brand { gap: 1.2rem; padding: 1.5rem 1.25rem 1.8rem; }
+  .welcome-logo { width: 150px; }
+  .welcome-packs { display: none; }
+  .welcome-brand h1 { font-size: clamp(1.7rem, 7vw, 2.2rem); }
+  .welcome-form-wrap { place-items: start center; padding-top: 1.8rem; }
+}

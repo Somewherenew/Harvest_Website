@@ -1,0 +1,61 @@
+{% from "_icons.html" import icon %}
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} | {{ company.name }}</title>
+  <meta name="description" content="{{ company.name }} makes freshly made Ghanaian snacks: plantain chips, sweet potato chips, popcorn and coated peanuts. {{ company.tagline }}.">
+  <meta name="theme-color" content="#137a2a">
+  <meta property="og:title" content="{{ company.name }} | {{ company.tagline }}">
+  <meta property="og:description" content="Freshly made plantain chips, sweet potato chips, popcorn and coated peanuts from Ghana.">
+  <meta property="og:image" content="{{ url_for('static', filename='img/og-banner.jpg', _external=True) }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body class="page-welcome">
+  <main class="welcome">
+    <section class="welcome-brand">
+      <img class="welcome-logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Harvests, freshly made" width="180" height="53">
+      <div class="welcome-brand-copy">
+        <p class="eyebrow eyebrow-light">{{ icon('leaf') }} Freshly made in Ghana</p>
+        <h1>Welcome to <span class="hl">{{ company.name }}</span></h1>
+        <p>{{ company.tagline }}.</p>
+      </div>
+      <img class="welcome-packs" src="{{ url_for('static', filename='img/hero-packs.webp') }}" alt="Harvests snack packs" width="1100" height="783">
+    </section>
+
+    <section class="welcome-form-wrap">
+      <form class="welcome-form" method="post" action="{{ url_for('main.welcome') }}" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <h2>Before you explore our snacks</h2>
+        <p class="welcome-intro">Share your contact details so we can reach you with new snacks and help with your orders.</p>
+
+        {% macro field(name, label, type="text", autocomplete="", required=False, inputmode="", placeholder="") -%}
+        <div class="field{{ ' has-error' if errors.get(name) }}">
+          <label for="w-{{ name }}">{{ label }}{% if not required %} <span>(optional)</span>{% endif %}</label>
+          <input id="w-{{ name }}" name="{{ name }}" type="{{ type }}" value="{{ form[name] }}"
+                 {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
+                 {% if inputmode %}inputmode="{{ inputmode }}"{% endif %}
+                 {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+                 {% if required %}required{% endif %}
+                 {% if errors.get(name) %}aria-invalid="true" aria-describedby="w-{{ name }}-err"{% endif %}>
+          {% if errors.get(name) %}<p class="field-error" id="w-{{ name }}-err">{{ errors[name] }}</p>{% endif %}
+        </div>
+        {%- endmacro %}
+
+        {{ field("full_name", "Full name", autocomplete="name", required=True) }}
+        {{ field("phone", "Phone number", type="tel", autocomplete="tel", required=True, inputmode="tel", placeholder="e.g. 024 123 4567") }}
+        {{ field("email", "Email address", type="email", autocomplete="email", inputmode="email") }}
+        {{ field("organisation", "Organisation", autocomplete="organization", placeholder="Company, school, shop or church") }}
+
+        <button class="btn btn-primary btn-lg welcome-next" type="submit">Next {{ icon('arrow') }}</button>
+        <p class="welcome-note">{{ icon('shield') }} We only use these details to contact you about Harvests products and orders.</p>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
