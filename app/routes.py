@@ -55,5 +55,4 @@ def contact():
         title="Contact & Order",
         products=content.PRODUCTS,
         label=content.product_label,
-        5
     )
